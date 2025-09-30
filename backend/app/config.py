@@ -1,0 +1,1 @@
+# Configuracion general (rutas, db, etc)
