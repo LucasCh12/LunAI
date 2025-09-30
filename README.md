@@ -27,3 +27,9 @@ Engine:
 - Sebastián Ammann Berruti
 
 Metodología SCRUM de trabajo
+
+# Recursos 📎
+
+- [Prototipo diseño web](https://www.figma.com/design/ivyRJ5GPVwRTSddi4uub8a/Untitled?node-id=0-1&p=f&t=l7aAfI9ArB2nUCf0-0)  
+- [Prototipo Product Discovery (PDF)](./docs/LunAI.pdf)
+- TODO: Product Discovery en figma
