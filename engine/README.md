@@ -4,17 +4,14 @@ La carpeta **engine** contiene todo lo relacionado con el **motor de inteligenci
 Aquí se gestionan los notebooks de entrenamiento y los modelos entrenados que luego se usarán para la inferencia en la aplicación.
 
 ---
-
 ## Estructura de la carpeta
 
-engine/
-  training/
-    clases_lesiones/
-      Training_v0.3.ipynb
-  models/
-  README.md
-
-
+- engine/
+  - training/
+    - clases_lesiones/
+      - Training_v0.3.ipynb
+  - models/
+  - README.md
 
 ---
 
