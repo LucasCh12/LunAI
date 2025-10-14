@@ -1,0 +1,75 @@
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: #1c2436;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    margin-top: 10px;
+}
+
+.main-index{
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    text-align: center;
+    padding: 10px;
+    margin-top: 80px;
+}
+
+h1 {
+    color: #fff;
+    font-size: 2rem; 
+    font-weight: 600;
+    line-height: 2.5rem;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #ffffffbb;
+    font-weight: 500;
+    font-size: 1.5rem; 
+    margin-bottom: 20px;
+}
+
+p{
+    color: #ffffffbb;
+    margin-top: 20px;
+    padding: 0 50px;
+}
+
+.button-up {
+    height: 55px;
+    background-color: #00000038; /* color base con transparencia */
+    color: white;
+    border: 2px solid transparent; /* borde inicial transparente */
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 200px;
+    transition: border-color 0.3s ease;
+    color: #ffffffcc;
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.button-up:hover {
+    border-color: #ffffff88; /* highlight del borde al pasar el mouse */
+}
+
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem;
+        line-height: 2rem;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
