@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   frontend:
     build:
@@ -8,8 +6,8 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - .:/app              # monta tu código local dentro del contenedor
-      - /app/node_modules   # evita sobreescribir node_modules
+      - .:/app:delegated    # monta solo tu código
+      - /app/node_modules   # preserva node_modules del contenedor
     environment:
       - CHOKIDAR_USEPOLLING=true
     stdin_open: true

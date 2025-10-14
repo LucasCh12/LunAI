@@ -1,15 +1,27 @@
 import './Navbar.css';
 
-function Navbar() {
+function Navbar({ onLoginClick }) {
   return (
     <nav className="navbar">
       <div className="izquierda">
-        <img src="/logo.png" alt="Logo Lunai"/>
+        <img src="/logo.png" alt="Logo Lunai" />
       </div>
+
       <div className="derecha">
-            <button className="button" onclick="location.href='/not_yet'">Ayuda</button>
-            <button className="button" onclick="location.href='/login'">Cerrar Sesión</button>
-        </div>
+        <button
+          className="button"
+          onClick={onLoginClick}
+        >
+          Iniciar Sesión
+        </button>
+        <button
+          className="button"
+          onClick={() => window.location.href = '/not_yet'}
+        >
+          Ayuda
+        </button>
+
+      </div>
     </nav>
   );
 }

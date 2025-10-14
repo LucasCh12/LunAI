@@ -73,3 +73,33 @@ p{
         gap: 10px;
     }
 }
+
+
+.carousel {
+  width: 90%;            
+  max-width: 1000px;    
+  margin: 30px auto;     
+  overflow: hidden;
+  border-radius: 10px;
+}
+.carousel-track {
+  display: flex;
+  gap: 10px;
+  animation: slide 20s linear infinite;
+}
+
+.carousel-track img {
+  width: 250px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
