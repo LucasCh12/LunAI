@@ -1,6 +1,6 @@
 import './Navbar.css';
 
-function Navbar({ onLoginClick }) {
+function Navbar({ onLoginClick, onRegisterClick }) {
   return (
     <nav className="navbar">
       <div className="izquierda">
