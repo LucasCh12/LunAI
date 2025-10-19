@@ -5,11 +5,21 @@ import tensorflow as tf
 from PIL import Image
 import numpy as np
 import io
+import os
 
 app = Flask(__name__)
 CORS(app)  # Permite conexión desde React
 
-model = load_model()
+# Ruta del modelo
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "model", "cnn_model.h5")
+
+# Cargar el modelo
+try:
+    model = tf.keras.models.load_model(MODEL_PATH)
+    print("Modelo cargado correctamente")
+except Exception as e:
+    print(f"Error al cargar el modelo: {e}")
+    model = None
 
 def preprocess_image(image_bytes):
     image = Image.open(io.BytesIO(image_bytes)).resize((224, 224))
