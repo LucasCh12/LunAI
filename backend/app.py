@@ -30,4 +30,4 @@ def predict():
     return jsonify({"probability": result})
     
 if __name__ == "__main__":
-    app.run(debug=False)
+    app.run(debug=True)
