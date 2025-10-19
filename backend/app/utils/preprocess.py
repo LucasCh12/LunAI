@@ -1,1 +1,0 @@
-# Preprocesado de imagenes antes de pasarlas al modelo
