@@ -2,5 +2,5 @@
 import tensorflow as tf
 
 def load_model():
-    model = tf.keras.models.load_model("model/cnn_model.h5")
+    model = tf.keras.models.load_model("backend/model/cnn_model.h5")
     return model
