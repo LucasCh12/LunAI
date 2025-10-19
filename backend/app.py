@@ -20,24 +20,48 @@ try:
 except Exception as e:
     print(f"Error al cargar el modelo: {e}")
     model = None
+   
+# Ruta home
+@app.route("/")
+def home():
+    return jsonify({"message": "Backend funcionando correctamente"})
 
-def preprocess_image(image_bytes):
-    image = Image.open(io.BytesIO(image_bytes)).resize((224, 224))
-    img_array = np.array(image) / 255.0
-    return np.expand_dims(img_array, axis=0)
-
+# Ruta de predicción
 @app.route("/predict", methods=["POST"])
 def predict():
     if "image" not in request.files:
-        return jsonify({"error": "No image uploaded"}), 400
+        return jsonify({"error": "No se envió ninguna imagen"}), 400
 
     image_file = request.files["image"]
-    image_bytes = image_file.read()
-    processed = preprocess_image(image_bytes)
+    
+    # Guardar imagen temporalmente
+    image_path = os.path.join("uploads", image_file.filename)
+    os.makedirs("uploads", exist_ok=True)
+    image_file.save(image_path)
 
-    prediction = model.predict(processed)
-    result = float(prediction[0][0])
-    return jsonify({"probability": result})
+    # Procesar la imagen
+    try:
+        img = Image.open(image_path).convert("RGB")
+        img = img.resize((128, 128)) 
+        img_array = np.array(img) / 255.0
+        img_array = np.expand_dims(img_array, axis=0)
+
+        # Predicción
+        prediction = model.predict(img_array)[0][0]
+        result = "Maligno" if prediction > 0.5 else "Benigno"
+
+        return jsonify({
+            "resultado": result,
+            "confianza": float(prediction)
+        })
+
+    except Exception as e:
+        return jsonify({"error": f"Error al procesar la imagen: {e}"}), 500
+
+    # Limpieza de la imagen temporal
+    finally:
+        if os.path.exists(image_path):
+            os.remove(image_path)
     
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(port = 5000, debug=True)
