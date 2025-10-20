@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
 from model.melanoma_model import load_model
+from database.models import db
+from auth.routes import auth_bp
 import tensorflow as tf
 from PIL import Image
 import numpy as np
@@ -10,6 +13,15 @@ import os
 app = Flask(__name__)
 CORS(app)  # Permite conexión desde React
 
+#Configuracion de la base de datos que estaba en una carpeta aparte
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///backend.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+db.init_app(app)
+
+with app.app_context():
+    db.create_all()
+    
+app.register_blueprint(auth_bp, url_prefix="/auth")
 # Ruta del modelo
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "model", "cnn_model.h5")
 

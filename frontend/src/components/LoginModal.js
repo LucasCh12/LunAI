@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./LoginModal.css";
 
-export default function LoginModal({ onClose }) {
+export default function LoginModal({ onClose, onLoginSuccess }) {
   const [visible, setVisible] = useState(false);
   const [isLogin, setIsLogin] = useState(true); // true = login, false = register
   const [formData, setFormData] = useState({
@@ -10,28 +11,11 @@ export default function LoginModal({ onClose }) {
     password: '',
     confirmPassword: ''
   });
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    setVisible(true);
+    setVisible(true); // animación fade-in
   }, []);
-
-  const handleClose = () => {
-    setVisible(false);
-    setTimeout(() => {
-      onClose();
-    }, 300);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (isLogin) {
-      console.log('Datos de login:', { email: formData.email, password: formData.password });
-      // Lógica de login
-    } else {
-      console.log('Datos de registro:', formData);
-      // Lógica de registro
-    }
-  };
 
   const handleChange = (e) => {
     setFormData({
@@ -40,12 +24,43 @@ export default function LoginModal({ onClose }) {
     });
   };
 
-  const switchToRegister = () => {
-    setIsLogin(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage("");
+
+    try {
+      if (isLogin) {
+        // Login
+        const res = await axios.post("http://localhost:5000/auth/login", {
+          email: formData.email,
+          password: formData.password
+        });
+        setMessage(res.data.message);
+        if (onLoginSuccess) onLoginSuccess(res.data.user);
+        onClose();
+      } else {
+        // Registro
+        if (formData.password !== formData.confirmPassword) {
+          setMessage("Las contraseñas no coinciden");
+          return;
+        }
+
+        const res = await axios.post("http://localhost:5000/auth/register", {
+          name: formData.name,
+          email: formData.email,
+          password: formData.password
+        });
+        setMessage(res.data.message);
+        setIsLogin(true); // luego de registrar, cambia a login
+      }
+    } catch (err) {
+      setMessage(err.response?.data?.error || "Ocurrió un error, intenta de nuevo.");
+    }
   };
 
-  const switchToLogin = () => {
-    setIsLogin(true);
+  const handleClose = () => {
+    setVisible(false);
+    setTimeout(() => onClose(), 300); // coincide con la animación
   };
 
   return (
@@ -55,12 +70,10 @@ export default function LoginModal({ onClose }) {
           <img src="/logo.png" alt="logo-img"/>
           <img src="/robot.png" alt="img-robot"/>
         </div>
-        
+
         <div className="derecha-login">
-          <button className="close-button" onClick={handleClose}>
-            X
-          </button>
-          
+          <button className="close-button" onClick={handleClose}>X</button>
+
           <div className="welcome-message">
             {isLogin ? (
               <>
@@ -74,66 +87,59 @@ export default function LoginModal({ onClose }) {
               </>
             )}
           </div>
-          
+
           <form onSubmit={handleSubmit}>
             {!isLogin && (
-              <input 
-                type="text" 
+              <input
+                type="text"
                 name="name"
-                placeholder="Nombre completo" 
+                placeholder="Nombre completo"
                 value={formData.name}
                 onChange={handleChange}
                 required
               />
             )}
-            
-            <input 
-              type="email" 
+            <input
+              type="email"
               name="email"
-              placeholder="Correo electrónico" 
+              placeholder="Correo electrónico"
               value={formData.email}
               onChange={handleChange}
               required
             />
-            
-            <input 
-              type="password" 
+            <input
+              type="password"
               name="password"
-              placeholder="Contraseña" 
+              placeholder="Contraseña"
               value={formData.password}
               onChange={handleChange}
               required
             />
-            
             {!isLogin && (
-              <input 
-                type="password" 
+              <input
+                type="password"
                 name="confirmPassword"
-                placeholder="Confirmar contraseña" 
+                placeholder="Confirmar contraseña"
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
               />
             )}
-            
+
             <button type="submit" className="submit-btn">
               {isLogin ? "Ingresa" : "Registrarse"}
             </button>
-            
-            <div className="switch-auth">
-              {isLogin ? (
-                <p>¿No tienes cuenta? <span onClick={switchToRegister}>Regístrate</span></p>
-              ) : (
-                <p>¿Ya tienes cuenta? <span onClick={switchToLogin}>Inicia Sesión</span></p>
-              )}
-            </div>
           </form>
-          
-          {isLogin && (
-            <div className="forgot-container">
-              <a href="/recuperar">¿Olvidaste tu contraseña?</a>
-            </div>
-          )}
+
+          {message && <p className="message">{message}</p>}
+
+          <div className="switch-auth">
+            {isLogin ? (
+              <p>¿No tienes cuenta? <span onClick={() => setIsLogin(false)}>Regístrate</span></p>
+            ) : (
+              <p>¿Ya tienes cuenta? <span onClick={() => setIsLogin(true)}>Inicia Sesión</span></p>
+            )}
+          </div>
         </div>
       </div>
     </div>
