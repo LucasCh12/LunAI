@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import './MainMenu.css';
 import LoginModal from "../components/LoginModal";
 import Navbar from "../components/Navbar";
-import ImageSlider from "../components/Slider";
+import Lottie from "lottie-react";
+import skinScan from "../assets/skin-scan.json";
 
 export default function MainMenu() {
   const [showLogin, setShowLogin] = useState(false);
@@ -30,7 +31,11 @@ export default function MainMenu() {
           </div>
         </div>
       </div>
-      <ImageSlider />
+      <Lottie
+        animationData={skinScan}
+        loop={true}
+        style={{ width: 300, height: 300 }}
+      />
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
     </div>
   );
