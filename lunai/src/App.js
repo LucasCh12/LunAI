@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import MainMenu from './pages/MainMenu';
 import LoginModal from './components/LoginModal';
-import RegisterModal from './pages/Register';
 
 import './App.css';
 

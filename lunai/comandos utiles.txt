@@ -1,2 +1,12 @@
 sudo docker compose build // buildea docker
 sudo docker compose up // levanta app en http://localhost:3000/
+
+docker run -p 3000:3000 `
+>>   -v "$(PWD)/src:/app/src" `
+>>   -v "$(PWD)/public:/app/public" `
+>>   -v "/app/node_modules" `
+>>   -e CHOKIDAR_USEPOLLING=true `
+>>   -e WATCHPACK_POLLING=true `
+>>   -e FAST_REFRESH=true `
+>>   --name lunai-dev `
+>>   lunai-frontend
