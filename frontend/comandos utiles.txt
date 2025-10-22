@@ -1,0 +1,2 @@
+sudo docker compose build // buildea docker
+sudo docker compose up // levanta app en http://localhost:3000/
