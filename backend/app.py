@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from model.melanoma_model import load_model
 from database.models import db
 from auth.routes import auth_bp, bcrypt as auth_bcrypt
 from flask_bcrypt import Bcrypt
@@ -34,7 +33,7 @@ with app.app_context():
     
 app.register_blueprint(auth_bp, url_prefix="/auth")
 # Ruta del modelo
-MODEL_PATH = os.path.join(os.path.dirname(__file__), "model", "cnn_model.h5")
+MODEL_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "engine", "models", "modelo_benigno_maligno_v1.keras")
 
 # Cargar el modelo
 try:
@@ -65,7 +64,7 @@ def predict():
     # Procesar la imagen
     try:
         img = Image.open(image_path).convert("RGB")
-        img = img.resize((128, 128)) 
+        img = img.resize((224, 224))  # El modelo espera imágenes de 224x224
         img_array = np.array(img) / 255.0
         img_array = np.expand_dims(img_array, axis=0)
 
