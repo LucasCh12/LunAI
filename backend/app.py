@@ -3,7 +3,8 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from model.melanoma_model import load_model
 from database.models import db
-from auth.routes import auth_bp
+from auth.routes import auth_bp, bcrypt as auth_bcrypt
+from flask_bcrypt import Bcrypt
 import tensorflow as tf
 from PIL import Image
 import numpy as np
@@ -17,6 +18,16 @@ CORS(app)  # Permite conexión desde React
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///backend.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
+
+# Inicializa Bcrypt y adjunta las rutas de autenticación
+bcrypt = Bcrypt()
+bcrypt.init_app(app)
+# Si auth_bcrypt es una instancia diferente, inicialízala también
+try:
+    auth_bcrypt.init_app(app)
+except Exception:
+    # Si ya está inicializada, simplemente ignora
+    pass
 
 with app.app_context():
     db.create_all()
