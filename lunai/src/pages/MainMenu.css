@@ -15,6 +15,7 @@ body {
 .main-content {
     flex: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px 0;
@@ -87,39 +88,106 @@ p{
     flex-wrap: wrap;
 }
 
-/* Carrusel Responsive */
-.carousel {
-    width: 90%;
-    max-width: 1000px;
-    margin: 30px auto;
-    overflow: hidden;
-    border-radius: 10px;
+.features-list {
+    max-width: 600px;
+    padding: 30px;
+    color: white;
+    flex: 1;
+    margin-left: 5%;
 }
 
-.carousel-track {
-    display: flex;
-    gap: 10px;
-    animation: slide 20s linear infinite;
+.how-it-works-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: white;
+    text-align: left;
 }
 
-.carousel-track img {
-    width: 250px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
-    flex-shrink: 0;
+.steps-list {
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 18px;
+    line-height: 1.8;
+    color: white;
 }
 
-@keyframes slide {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
+.steps-list li {
+    margin-bottom: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    font-size: 18px;
 }
 
-/* Media Queries específicas */
+.steps-list li:last-child {
+    border-bottom: none;
+}
+
+.steps-list strong {
+    color: white;
+    font-size: 20px;
+}
+
+.disclaimer {
+    font-size: 16px;
+    font-style: italic;
+    margin-top: 30px;
+    color: rgba(255, 255, 255, 0.8);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    padding-top: 20px;
+    text-align: left;
+}
+
+.analysis-info {
+  max-width: 300px;
+  padding: 25px;
+  color: white;
+  margin-left: 8%;
+  margin-top: 5%;
+}
+
+.analysis-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: white;
+  text-align: left;
+}
+
+.analysis-points {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.analysis-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.analysis-item span {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.analysis-item strong {
+  color: white;
+  font-size: 16px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.analysis-item p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 0;
+  padding: 0;
+}
+
 @media screen and (max-width: 768px) {
     .main-content {
         padding: 10px 0;
@@ -146,18 +214,30 @@ p{
         width: 180px;
     }
     
-    .carousel {
-        margin: 20px auto;
+    .features-list {
+        text-align: center;
+        max-width: 100%;
+        padding: 20px;
+        margin-left: 0;
     }
     
-    .carousel-track img {
-        width: 200px;
-        height: 120px;
+    .how-it-works-title,
+    .disclaimer {
+        text-align: center;
     }
     
-    .action-buttons {
-        flex-direction: column;
-        gap: 10px;
+    .analysis-info {
+        max-width: 100%;
+        text-align: center;
+        margin-left: 0;
+    }
+    
+    .analysis-title {
+        text-align: center;
+    }
+    
+    .analysis-item {
+        justify-content: center;
     }
 }
 
@@ -186,14 +266,25 @@ p{
         font-size: 16px;
     }
     
-    .carousel-track img {
-        width: 180px;
-        height: 110px;
+    .features-list {
+        padding: 15px;
     }
     
-    .carousel {
-        width: 95%;
-        margin: 15px auto;
+    .how-it-works-title {
+        font-size: 28px;
+    }
+    
+    .steps-list {
+        font-size: 16px;
+    }
+    
+    .steps-list li {
+        font-size: 16px;
+        padding: 12px 0;
+    }
+    
+    .steps-list strong {
+        font-size: 18px;
     }
 }
 
@@ -216,8 +307,19 @@ p{
         height: 48px;
     }
     
-    .carousel-track img {
-        width: 160px;
-        height: 100px;
+    .features-list {
+        padding: 10px;
+    }
+    
+    .how-it-works-title {
+        font-size: 24px;
+    }
+    
+    .steps-list {
+        font-size: 15px;
+    }
+    
+    .steps-list li {
+        font-size: 15px;
     }
 }
