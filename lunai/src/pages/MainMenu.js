@@ -1,17 +1,16 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import './MainMenu.css';
 import LoginModal from "../components/LoginModal";
-import Navbar from "../components/Navbar";
 import Lottie from "lottie-react";
 import robot from "../assets/robot.json";
 
 export default function MainMenu() {
   const [showLogin, setShowLogin] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="MainMenu">
-      <Navbar onLoginClick={() => setShowLogin(true)} />
-
       <div className="main-content">
         <div className="main-index">
           <div className="main-texto">
@@ -22,7 +21,7 @@ export default function MainMenu() {
             <div className="action-buttons">
               <button
                 className="button-up"
-                onClick={() => window.location.href = '/upload'}
+                onClick={() => navigate('/image-processor')}
               >
                 Empieza tu consulta
               </button>
