@@ -1,8 +1,0 @@
-.slider-image {
-  width: 100%;        /* ocupa todo el ancho de la slide */
-  height: 300px;      /* altura fija para todas las imágenes */
-  object-fit: cover;  /* mantiene proporción y recorta si es necesario */
-  border-radius: 10px;
-  display: block;
-  margin: 0 auto;     /* centra la imagen */
-}
