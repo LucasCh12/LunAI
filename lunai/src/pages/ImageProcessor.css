@@ -6,6 +6,7 @@
   padding: 20px;
   min-height: 80vh;
   align-items: flex-start;
+  margin-top: 4%
 }
 
 .left-column {
@@ -19,13 +20,13 @@
 }
 
 .upload-box {
-  border: 2px dashed #4a90e2; /* Azul brillante que contrasta */
+  border: 2px dashed #4a90e2;
   border-radius: 12px;
   padding: 0;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  background-color: #1c2436; /* Fondo oscuro */
+  background-color: #1c2436; 
   
   width: 100%;
   aspect-ratio: 1 / 1; 
@@ -39,8 +40,8 @@
 }
 
 .upload-box:hover {
-  border-color: #63a4ff; /* Azul más claro al hover */
-  background-color: #252f45; /* Un poco más claro al hover */
+  border-color: #63a4ff; 
+  background-color: #252f45; 
 }
 
 .upload-box.has-image {
@@ -49,14 +50,14 @@
 }
 
 .upload-placeholder {
-  color: #e8ecef; /* Texto claro que contrasta con fondo oscuro */
+  color: #e8ecef; 
   padding: 40px 20px;
 }
 
 .upload-icon {
   font-size: 48px;
   margin-bottom: 16px;
-  color: #4a90e2; /* Azul brillante para el icono */
+  color: #4a90e2;
 }
 
 .image-preview {
@@ -98,8 +99,8 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(28, 36, 54, 0.9); /* Mismo color de fondo con transparencia */
-  color: #4a90e2; /* Azul contrastante */
+  background: rgba(28, 36, 54, 0.9); 
+  color: #4a90e2; 
   padding: 15px;
   text-align: center;
   font-weight: bold;
