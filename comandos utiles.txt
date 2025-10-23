@@ -24,4 +24,9 @@ Abrir http://localhost:3000
 
 
 Posible error axios y react-router-dom:
-npm install react-router-dom axios
+-npm install react-router-dom axios
+
+Para checkear la base de datos:
+-cd backend
+-venv\Scripts\activate
+-python check_db.py
