@@ -1,12 +1,4 @@
 import './Navbar.css';
-<<<<<<< HEAD
-
-function Navbar({ onLoginClick, onRegisterClick }) {
-  return (
-    <nav className="navbar">
-      <div className="izquierda">
-        <img src="/logo.png" alt="Logo Lunai" />
-=======
 import { useNavigate } from 'react-router-dom';
 
 function Navbar({ onLoginClick, onRegisterClick }) {
@@ -25,7 +17,6 @@ function Navbar({ onLoginClick, onRegisterClick }) {
           onClick={handleLogoClick}
           style={{ cursor: 'pointer' }} // Para que se vea como clickeable
         />
->>>>>>> frontend
       </div>
 
       <div className="derecha">
@@ -41,10 +32,6 @@ function Navbar({ onLoginClick, onRegisterClick }) {
         >
           Ayuda
         </button>
-<<<<<<< HEAD
-
-=======
->>>>>>> frontend
       </div>
     </nav>
   );

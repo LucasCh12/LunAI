@@ -10,3 +10,18 @@ docker run -p 3000:3000 `
 >>   -e FAST_REFRESH=true `
 >>   --name lunai-dev `
 >>   lunai-frontend
+
+
+Sin docker:
+Primero vamos a la carpeta backend:
+-venv\Scripts\activate
+-pip install -r requirements.txt (Con hacerlo una vez esta bien, para proximas no es necesario)
+-python app.py
+Abro una nueva terminal y voy a frontend ("lunai"):
+-npm install
+-npm start
+Abrir http://localhost:3000
+
+
+Posible error axios y react-router-dom:
+npm install react-router-dom axios

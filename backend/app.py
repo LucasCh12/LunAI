@@ -4,16 +4,22 @@ from flask_sqlalchemy import SQLAlchemy
 from database.models import db
 from auth.routes import auth_bp, bcrypt as auth_bcrypt
 from flask_bcrypt import Bcrypt
-import tensorflow as tf
-from PIL import Image
-import numpy as np
-import io
 import os
+
+# 🔹 Intentar importar TensorFlow, pero no hacerlo obligatorio
+try:
+    import tensorflow as tf
+    from PIL import Image
+    import numpy as np
+    TF_AVAILABLE = True
+except ImportError:
+    print("TensorFlow no está instalado. Las rutas de predicción estarán desactivadas.")
+    TF_AVAILABLE = False
 
 app = Flask(__name__)
 CORS(app)  # Permite conexión desde React
 
-#Configuracion de la base de datos que estaba en una carpeta aparte
+# Configuración BD
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///backend.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
@@ -32,15 +38,17 @@ with app.app_context():
     db.create_all()
     
 app.register_blueprint(auth_bp, url_prefix="/auth")
-# Ruta del modelo
-MODEL_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "engine", "models", "modelo_benigno_maligno_v1.keras")
 
-# Cargar el modelo
-try:
-    model = tf.keras.models.load_model(MODEL_PATH)
-    print("Modelo cargado correctamente")
-except Exception as e:
-    print(f"Error al cargar el modelo: {e}")
+# Cargar modelo si está disponible
+if TF_AVAILABLE:
+    MODEL_PATH = os.path.join(os.path.dirname(__file__), "engine", "models", "modelo_benigno_maligno_v1.keras")
+    try:
+        model = tf.keras.models.load_model(MODEL_PATH)
+        print("✅ Modelo cargado correctamente.")
+    except Exception as e:
+        print(f"⚠️ Error al cargar el modelo: {e}")
+        model = None
+else:
     model = None
    
 # Ruta home
@@ -51,6 +59,9 @@ def home():
 # Ruta de predicción
 @app.route("/predict", methods=["POST"])
 def predict():
+    if not TF_AVAILABLE or model is None:
+        return jsonify({"error": "TensorFlow no está disponible en este entorno"}), 501
+
     if "image" not in request.files:
         return jsonify({"error": "No se envió ninguna imagen"}), 400
 
