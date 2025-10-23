@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
-<<<<<<< HEAD
 import axios from "axios";
 import "./LoginModal.css";
 
 export default function LoginModal({ onClose, onLoginSuccess }) {
-=======
-import "./LoginModal.css";
-
-export default function LoginModal({ onClose }) {
->>>>>>> frontend
   const [visible, setVisible] = useState(false);
   const [isLogin, setIsLogin] = useState(true); // true = login, false = register
   const [formData, setFormData] = useState({
@@ -17,38 +11,12 @@ export default function LoginModal({ onClose }) {
     password: '',
     confirmPassword: ''
   });
-<<<<<<< HEAD
   const [message, setMessage] = useState("");
 
   useEffect(() => {
     setVisible(true); // animación fade-in
   }, []);
 
-=======
-
-  useEffect(() => {
-    setVisible(true);
-  }, []);
-
-  const handleClose = () => {
-    setVisible(false);
-    setTimeout(() => {
-      onClose();
-    }, 300);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (isLogin) {
-      console.log('Datos de login:', { email: formData.email, password: formData.password });
-      // Lógica de login
-    } else {
-      console.log('Datos de registro:', formData);
-      // Lógica de registro
-    }
-  };
-
->>>>>>> frontend
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -56,7 +24,6 @@ export default function LoginModal({ onClose }) {
     });
   };
 
-<<<<<<< HEAD
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
@@ -94,14 +61,6 @@ export default function LoginModal({ onClose }) {
   const handleClose = () => {
     setVisible(false);
     setTimeout(() => onClose(), 300); // coincide con la animación
-=======
-  const switchToRegister = () => {
-    setIsLogin(false);
-  };
-
-  const switchToLogin = () => {
-    setIsLogin(true);
->>>>>>> frontend
   };
 
   return (
@@ -111,19 +70,10 @@ export default function LoginModal({ onClose }) {
           <img src="/logo.png" alt="logo-img"/>
           <img src="/robot.png" alt="img-robot"/>
         </div>
-<<<<<<< HEAD
 
         <div className="derecha-login">
           <button className="close-button" onClick={handleClose}>X</button>
 
-=======
-        
-        <div className="derecha-login">
-          <button className="close-button" onClick={handleClose}>
-            X
-          </button>
-          
->>>>>>> frontend
           <div className="welcome-message">
             {isLogin ? (
               <>
@@ -137,7 +87,6 @@ export default function LoginModal({ onClose }) {
               </>
             )}
           </div>
-<<<<<<< HEAD
 
           <form onSubmit={handleSubmit}>
             {!isLogin && (
@@ -145,72 +94,37 @@ export default function LoginModal({ onClose }) {
                 type="text"
                 name="name"
                 placeholder="Nombre completo"
-=======
-          
-          <form onSubmit={handleSubmit}>
-            {!isLogin && (
-              <input 
-                type="text" 
-                name="name"
-                placeholder="Nombre completo" 
->>>>>>> frontend
                 value={formData.name}
                 onChange={handleChange}
                 required
               />
             )}
-<<<<<<< HEAD
             <input
               type="email"
               name="email"
               placeholder="Correo electrónico"
-=======
-            
-            <input 
-              type="email" 
-              name="email"
-              placeholder="Correo electrónico" 
->>>>>>> frontend
               value={formData.email}
               onChange={handleChange}
               required
             />
-<<<<<<< HEAD
             <input
               type="password"
               name="password"
               placeholder="Contraseña"
-=======
-            
-            <input 
-              type="password" 
-              name="password"
-              placeholder="Contraseña" 
->>>>>>> frontend
               value={formData.password}
               onChange={handleChange}
               required
             />
-<<<<<<< HEAD
             {!isLogin && (
               <input
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirmar contraseña"
-=======
-            
-            {!isLogin && (
-              <input 
-                type="password" 
-                name="confirmPassword"
-                placeholder="Confirmar contraseña" 
->>>>>>> frontend
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
               />
             )}
-<<<<<<< HEAD
 
             <button type="submit" className="submit-btn">
               {isLogin ? "Ingresa" : "Registrarse"}
@@ -226,33 +140,8 @@ export default function LoginModal({ onClose }) {
               <p>¿Ya tienes cuenta? <span onClick={() => setIsLogin(true)}>Inicia Sesión</span></p>
             )}
           </div>
-=======
-            
-            <button type="submit" className="submit-btn">
-              {isLogin ? "Ingresa" : "Registrarse"}
-            </button>
-            
-            <div className="switch-auth">
-              {isLogin ? (
-                <p>¿No tienes cuenta? <span onClick={switchToRegister}>Regístrate</span></p>
-              ) : (
-                <p>¿Ya tienes cuenta? <span onClick={switchToLogin}>Inicia Sesión</span></p>
-              )}
-            </div>
-          </form>
-          
-          {isLogin && (
-            <div className="forgot-container">
-              <a href="/recuperar">¿Olvidaste tu contraseña?</a>
-            </div>
-          )}
->>>>>>> frontend
         </div>
       </div>
     </div>
   );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> frontend
