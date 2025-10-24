@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  backend:
+    build: ./backend
+    container_name: backend_lunai
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend:/app
+    restart: always
+
+  frontend:
+    build: ./lunai
+    container_name: frontend_lunai
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
