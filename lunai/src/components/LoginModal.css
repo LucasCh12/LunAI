@@ -186,6 +186,22 @@
   color: #1c2436 !important; /* Color al hacer hover */
 }
 
+
+.message {
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.success-message {
+  color: #2ecc71;
+}
+
+.error-message {
+  color: #e74c3c;
+}
+
+
 /* Animación suave al cambiar entre formularios */
 .derecha-login > * {
   transition: opacity 0.3s ease;
