@@ -18,7 +18,7 @@ Primero vamos a la carpeta backend:
 -pip install -r requirements.txt (Con hacerlo una vez esta bien, para proximas no es necesario)
 -python app.py
 Abro una nueva terminal y voy a frontend ("lunai"):
--npm install
+-npm install (Con hacerlo una vez esta bien, para proximas no es necesario)
 -npm start
 Abrir http://localhost:3000
 

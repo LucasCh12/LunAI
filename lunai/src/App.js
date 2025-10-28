@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import MainMenu from './pages/MainMenu';
@@ -7,16 +7,49 @@ import LoginModal from './components/LoginModal';
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
+  const [user, setUser] = useState(null);
+
+  //Sesión iniciada
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  //Sesión iniciada
+  const handleLoginSuccess = (userData) => {
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+    setShowLogin(false);
+  };
+
+  //Cerrar sesión
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+  };
 
   return (
     <Router>
       <div className="App">
-        <Navbar onLoginClick={() => setShowLogin(true)} />
+        <Navbar 
+          onLoginClick={() => setShowLogin(true)} 
+          user={user} 
+          onLogout={handleLogout} 
+        />
+
         <Routes>
-          <Route path="/" element={<MainMenu />} />
+          <Route path="/" element={<MainMenu user={user} />} />
           <Route path="/image-processor" element={<ImageProcessor />} />
         </Routes>
-        {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
+
+        {showLogin && (
+          <LoginModal 
+            onClose={() => setShowLogin(false)} 
+            onLoginSuccess={handleLoginSuccess} 
+          />
+        )}
       </div>
     </Router>
   );

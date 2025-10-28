@@ -49,6 +49,13 @@
     transition: background-color 0.5s ease;
 }
 
+.username{
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    width: 150px;
+}
+
 .button:hover {
      background-color: #5a5f7f;
 }

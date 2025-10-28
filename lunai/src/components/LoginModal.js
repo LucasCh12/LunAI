@@ -6,12 +6,13 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
   const [visible, setVisible] = useState(false);
   const [isLogin, setIsLogin] = useState(true); // true = login, false = register
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
   const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState(false); 
 
   useEffect(() => {
     setVisible(true); // animación fade-in
@@ -20,22 +21,24 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
+    setSuccess(false);
 
     try {
       if (isLogin) {
         // Login
         const res = await axios.post("http://localhost:5000/auth/login", {
           email: formData.email,
-          password: formData.password
+          password: formData.password,
         });
-        setMessage(res.data.message);
+
+        setMessage(res.data.message || "Inicio de sesión exitoso.");
         if (onLoginSuccess) onLoginSuccess(res.data.user);
         onClose();
       } else {
@@ -48,13 +51,26 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
         const res = await axios.post("http://localhost:5000/auth/register", {
           name: formData.name,
           email: formData.email,
-          password: formData.password
+          password: formData.password,
         });
-        setMessage(res.data.message);
-        setIsLogin(true); // luego de registrar, cambia a login
+
+        setSuccess(true);
+        setMessage(res.data.message || "Registro exitoso. ¡Ahora inicia sesión!");
+        setFormData({
+          name: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
+        setIsLogin(true);
       }
     } catch (err) {
-      setMessage(err.response?.data?.error || "Ocurrió un error, intenta de nuevo.");
+      console.error("Error en login/register:", err);
+      setMessage(
+        err.response?.data?.error ||
+        err.response?.data?.message ||
+        "Ocurrió un error, intenta de nuevo."
+      );
     }
   };
 
@@ -83,7 +99,9 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
             ) : (
               <>
                 <h2>¡Únete a LunAI!</h2>
-                <p>Crea tu cuenta y comienza a cuidar tu piel de manera inteligente.</p>
+                <p>
+                  Crea tu cuenta y comienza a cuidar tu piel de manera inteligente.
+                </p>
               </>
             )}
           </div>
@@ -131,13 +149,23 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
             </button>
           </form>
 
-          {message && <p className="message">{message}</p>}
+          {message && (
+            <p className={`message ${success ? "success-message" : "error-message"}`}>
+              {message}
+            </p>
+          )}
 
           <div className="switch-auth">
             {isLogin ? (
-              <p>¿No tienes cuenta? <span onClick={() => setIsLogin(false)}>Regístrate</span></p>
+              <p>
+                ¿No tienes cuenta?{" "}
+                <span onClick={() => setIsLogin(false)}>Regístrate</span>
+              </p>
             ) : (
-              <p>¿Ya tienes cuenta? <span onClick={() => setIsLogin(true)}>Inicia Sesión</span></p>
+              <p>
+                ¿Ya tienes cuenta?{" "}
+                <span onClick={() => setIsLogin(true)}>Inicia Sesión</span>
+              </p>
             )}
           </div>
         </div>
