@@ -6,7 +6,7 @@ from auth.routes import auth_bp, bcrypt as auth_bcrypt
 from flask_bcrypt import Bcrypt
 import os
 
-# 🔹 Intentar importar TensorFlow, pero no hacerlo obligatorio
+#  Intentar importar TensorFlow, pero no hacerlo obligatorio
 try:
     import tensorflow as tf
     from PIL import Image
@@ -41,7 +41,7 @@ app.register_blueprint(auth_bp, url_prefix="/auth")
 
 # Cargar modelo si está disponible
 if TF_AVAILABLE:
-    MODEL_PATH = os.path.join(os.path.dirname(__file__), "engine", "models", "modelo_benigno_maligno_v1.keras")
+    MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', "engine", "models", "modelo_benigno_maligno_v1.keras")
     try:
         model = tf.keras.models.load_model(MODEL_PATH)
         print("✅ Modelo cargado correctamente.")

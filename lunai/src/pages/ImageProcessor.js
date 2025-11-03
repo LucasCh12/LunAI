@@ -5,9 +5,14 @@ import './ImageProcessor.css';
 export default function ImageProcessor() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
 
   const handleImageUpload = (event) => {
+    setError(null);
+    setResult(null);
     const file = event.target.files[0];
     if (file) {
       setSelectedImage(file);
@@ -26,6 +31,8 @@ export default function ImageProcessor() {
 
   const handleDrop = (event) => {
     event.preventDefault();
+    setError(null);
+    setResult(null);
     const file = event.dataTransfer.files[0];
     if (file && file.type.startsWith('image/')) {
       setSelectedImage(file);
@@ -40,6 +47,45 @@ export default function ImageProcessor() {
 
   const handleBoxClick = () => {
     fileInputRef.current.click();
+  };
+
+  const handleAnalyze = async () => {
+    if (!selectedImage) return;
+    setLoading(true);
+    setError(null);
+    setResult(null);
+
+    try {
+      const formData = new FormData();
+      formData.append('image', selectedImage, selectedImage.name);
+
+      const resp = await fetch('http://localhost:5000/predict', {
+        method: 'POST',
+        body: formData
+      });
+
+      let data;
+      try {
+        data = await resp.json();
+      } catch {
+        const text = await resp.text();
+        throw new Error(text || `HTTP ${resp.status}`);
+      }
+
+      if (!resp.ok) {
+        throw new Error(data?.error || JSON.stringify(data) || `HTTP ${resp.status}`);
+      }
+
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setResult(data);
+      }
+    } catch (err) {
+      setError(err.message || 'Error en la petición');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -88,12 +134,27 @@ export default function ImageProcessor() {
         
         <button 
           className="button-up"
-          disabled={!selectedImage}
+          disabled={!selectedImage || loading}
+          onClick={handleAnalyze}
         >
-          {selectedImage ? 'Analizar imagen' : 'Selecciona una imagen'}
+          {loading ? 'Analizando...' : (selectedImage ? 'Analizar imagen' : 'Selecciona una imagen')}
         </button>
         
         <p>Sube una foto clara de tu lunar para análisis IA</p>
+
+        {result && (
+          <div className="result-box">
+            <h4>Resultado</h4>
+            <p>Clase: {result.resultado}</p>
+            <p>Confianza: {(result.confianza ?? 0).toFixed(4)}</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="error-box" style={{ color: 'red' }}>
+            <p>Error: {error}</p>
+          </div>
+        )}
       </div>
     </div>
   );
