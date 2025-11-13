@@ -14,6 +14,7 @@ docker run -p 3000:3000 `
 
 Sin docker:
 Primero vamos a la carpeta backend:
+-python -m venv venv
 -venv\Scripts\activate
 -pip install -r requirements.txt (Con hacerlo una vez esta bien, para proximas no es necesario)
 -python app.py
@@ -29,4 +30,4 @@ Posible error axios y react-router-dom:
 Para checkear la base de datos:
 -cd backend
 -venv\Scripts\activate
--python check_db.py
+-python check.py
