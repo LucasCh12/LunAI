@@ -1,7 +1,7 @@
 import './Navbar.css';
 import { useNavigate } from 'react-router-dom';
 
-function Navbar({ onLoginClick, onRegisterClick }) {
+function Navbar({ onLoginClick, onLogoutClick, isAuthenticated, user }) {
   const navigate = useNavigate();
 
   const handleLogoClick = () => {
@@ -20,18 +20,34 @@ function Navbar({ onLoginClick, onRegisterClick }) {
       </div>
 
       <div className="derecha">
-        <button
-          className="button"
-          onClick={onLoginClick}
-        >
-          Iniciar Sesión
-        </button>
-        <button
-          className="button"
-          onClick={() => window.location.href = '/not_yet'}
-        >
-          Ayuda
-        </button>
+        {isAuthenticated ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{ color: 'white', fontSize: '14px' }}>
+              Hola, {user?.name || 'Usuario'}
+            </span>
+            <button
+              className="button"
+              onClick={onLogoutClick}
+            >
+              Cerrar Sesión
+            </button>
+          </div>
+        ) : (
+          <>
+            <button
+              className="button"
+              onClick={onLoginClick}
+            >
+              Iniciar Sesión
+            </button>
+            <button
+              className="button"
+              onClick={() => window.location.href = '/not_yet'}
+            >
+              Ayuda
+            </button>
+          </>
+        )}
       </div>
     </nav>
   );
