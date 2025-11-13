@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from database.models import db
 from auth.routes import auth_bp, bcrypt as auth_bcrypt
+from images.routes import images_bp
 from flask_bcrypt import Bcrypt
 import os
 
@@ -37,20 +38,27 @@ except Exception:
 with app.app_context():
     db.create_all()
     
-app.register_blueprint(auth_bp, url_prefix="/auth")
+
 
 # Cargar modelo si está disponible
 if TF_AVAILABLE:
     MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', "engine", "models", "modelo_benigno_maligno_v1.keras")
     try:
         model = tf.keras.models.load_model(MODEL_PATH)
+        app.config["MODEL"] = model
         print("✅ Modelo cargado correctamente.")
     except Exception as e:
         print(f"⚠️ Error al cargar el modelo: {e}")
+        app.config["MODEL"] = None
         model = None
 else:
     model = None
-   
+    app.config["MODEL"] = None
+
+# Registrar blueprints
+app.register_blueprint(auth_bp, url_prefix="/auth")
+app.register_blueprint(images_bp, url_prefix="/images")
+
 # Ruta home
 @app.route("/")
 def home():
@@ -59,6 +67,9 @@ def home():
 # Ruta de predicción
 @app.route("/predict", methods=["POST"])
 def predict():
+
+    model= app.config.get("MODEL")
+    
     if not TF_AVAILABLE or model is None:
         return jsonify({"error": "TensorFlow no está disponible en este entorno"}), 501
 
@@ -66,6 +77,7 @@ def predict():
         return jsonify({"error": "No se envió ninguna imagen"}), 400
 
     image_file = request.files["image"]
+    user_id = request.form.get("user_id")
     
     # Guardar imagen temporalmente
     image_path = os.path.join("uploads", image_file.filename)
@@ -83,6 +95,17 @@ def predict():
         prediction = model.predict(img_array)[0][0]
         result = "Maligno" if prediction > 0.5 else "Benigno"
 
+        # Guardar en BD
+        new_image = Image(
+            name=image_file.filename,
+            result=result,
+            confidence=float(prediction),
+            user_id=user_id,
+            patient_id=request.form.get("patient_id", None)
+        )
+        db.session.add(new_image)
+        db.session.commit()
+
         return jsonify({
             "resultado": result,
             "confianza": float(prediction)
@@ -95,6 +118,11 @@ def predict():
     finally:
         if os.path.exists(image_path):
             os.remove(image_path)
-    
+
+@app.route("/get_images/<int:user_id>", methods=["GET"])
+def get_images(user_id):
+    images = Image.query.filter_by(user_id=user_id).order_by(Image.upload_date.desc()).all()
+    return jsonify([img.to_dict() for img in images])
+
 if __name__ == "__main__":
     app.run(port = 5000, debug=True)

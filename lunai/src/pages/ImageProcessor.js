@@ -3,13 +3,16 @@ import React, { useState, useRef } from 'react';
 
 import './ImageProcessor.css';
 
-export default function ImageProcessor() {
+export default function ImageProcessor({ user }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
+  const [patientName, setPatientName] = useState('');
+  const [patientAge, setPatientAge] = useState('');
+
 
   const handleImageUpload = (event) => {
     setError(null);
@@ -66,7 +69,7 @@ export default function ImageProcessor() {
         formData.append('patient_age', patientAge);
       }
 
-      const resp = await fetch('http://localhost:5000/predict', {
+        const resp = await fetch('http://localhost:5000/images/upload_image', {
         method: 'POST',
         body: formData
       });
@@ -169,8 +172,8 @@ export default function ImageProcessor() {
         {result && (
           <div className="result-box">
             <h4>Resultado</h4>
-            <p>Clase: {result.resultado}</p>
-            <p>Confianza: {(result.confianza ?? 0).toFixed(4)}</p>
+            <p>Clase: {result.result}</p>
+            <p>Confianza: {(result.confidence ?? 0).toFixed(4)}</p>
           </div>
         )}
 

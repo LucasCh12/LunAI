@@ -41,7 +41,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<MainMenu user={user} />} />
-          <Route path="/image-processor" element={<ImageProcessor />} />
+          <Route path="/image-processor" element={<ImageProcessor user={user}/>} />
         </Routes>
 
         {showLogin && (

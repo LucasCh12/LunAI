@@ -29,12 +29,7 @@ class Patient(db.Model):
     images = db.relationship('Image', backref='patient', lazy=True)
 
     def to_dict(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "age": self.age,
-            "gender": self.gender,
-            "doctor_id": self.doctor_id
+        return {"id": self.id,"name": self.name,"age": self.age,"gender": self.gender,"doctor_id": self.doctor_id
         }
     
 class Image(db.Model):
@@ -46,7 +41,7 @@ class Image(db.Model):
     uploaded_at = db.Column(db.DateTime, server_default=db.func.now())
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    patient_id = db.Column(db.Integer, db.ForeignKey('patients.id'), nullable=False)
+    patient_id = db.Column(db.Integer, db.ForeignKey('patients.id'), nullable=True)
 
     def to_dict(self):
         return {
