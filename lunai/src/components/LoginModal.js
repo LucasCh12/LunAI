@@ -10,6 +10,7 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
     email: "",
     password: "",
     confirmPassword: "",
+    role: "",
   });
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false); 
@@ -52,6 +53,7 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
           name: formData.name,
           email: formData.email,
           password: formData.password,
+          role: formData.role,
         });
 
         setSuccess(true);
@@ -108,6 +110,7 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
 
           <form onSubmit={handleSubmit}>
             {!isLogin && (
+              <>
               <input
                 type="text"
                 name="name"
@@ -116,6 +119,17 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
                 onChange={handleChange}
                 required
               />
+              <select
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled>Selecciona el uso que le daras</option>
+                <option value="personal">Personal</option>
+                <option value="professional">Profesional de la salud</option>
+              </select>
+              </>
             )}
             <input
               type="email"

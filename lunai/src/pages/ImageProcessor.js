@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 
+
 import './ImageProcessor.css';
 
 export default function ImageProcessor() {
@@ -56,8 +57,14 @@ export default function ImageProcessor() {
     setResult(null);
 
     try {
+
       const formData = new FormData();
-      formData.append('image', selectedImage, selectedImage.name);
+      formData.append('image', selectedImage);
+      formData.append('user_id', user.id);
+      if (user.role === 'profesional') {
+        formData.append('patient_name', patientName);
+        formData.append('patient_age', patientAge);
+      }
 
       const resp = await fetch('http://localhost:5000/predict', {
         method: 'POST',
@@ -128,6 +135,23 @@ export default function ImageProcessor() {
           <li>Seguimiento de cambios temporales</li>
         </ul>
         
+        {user?.role === "profesional" && (
+          <div className="patient-section">
+            <input
+              type="text"
+              placeholder="Nombre del paciente"
+              value={patientName}
+              onChange={(e) => setPatientName(e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Edad"
+              value={patientAge}
+              onChange={(e) => setPatientAge(e.target.value)}
+            />
+          </div>
+        )}
+
         <div className="separator"></div>
         
         <h3>Tu asistente dermatológico con IA</h3>
