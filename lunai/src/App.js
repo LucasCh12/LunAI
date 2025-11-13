@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import MainMenu from './pages/MainMenu';
 import ImageProcessor from './pages/ImageProcessor';
+import History from './pages/History';
 import LoginModal from './components/LoginModal';
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainMenu />} />
           <Route path="/image-processor" element={<ImageProcessor />} />
+          <Route path="/history" element={<History />} />
         </Routes>
         {showLogin && (
           <LoginModal 

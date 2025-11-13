@@ -5,7 +5,7 @@ function Navbar({ onLoginClick, onLogoutClick, isAuthenticated, user }) {
   const navigate = useNavigate();
 
   const handleLogoClick = () => {
-    navigate('/'); // Esto te llevará a la ruta principal (MainMenu)
+    navigate('/');
   };
 
   return (
@@ -15,14 +15,20 @@ function Navbar({ onLoginClick, onLogoutClick, isAuthenticated, user }) {
           src="/logo.png" 
           alt="Logo Lunai" 
           onClick={handleLogoClick}
-          style={{ cursor: 'pointer' }} // Para que se vea como clickeable
+          style={{ cursor: 'pointer' }}
         />
       </div>
 
       <div className="derecha">
         {isAuthenticated ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ color: 'white', fontSize: '14px' }}>
+          <>
+            <button
+              className="button"
+              onClick={() => navigate('/history')}
+            >
+              Mi Historial
+            </button>
+            <span style={{ color: 'white', fontSize: '14px', margin: '0 10px' }}>
               Hola, {user?.name || 'Usuario'}
             </span>
             <button
@@ -31,7 +37,7 @@ function Navbar({ onLoginClick, onLogoutClick, isAuthenticated, user }) {
             >
               Cerrar Sesión
             </button>
-          </div>
+          </>
         ) : (
           <>
             <button

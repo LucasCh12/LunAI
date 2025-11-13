@@ -1,0 +1,78 @@
+.history-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.history-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+  flex-direction: column;
+  gap: 40px; 
+}
+
+.history-header h1 {
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  margin: 0;
+}
+
+.history-clear-btn {
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.history-empty {
+  text-align: center;
+  padding: 50px;
+  color: #666;
+}
+
+.history-empty-btn {
+  background-color: #667eea;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.history-analysis-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.history-analysis-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.history-analysis-info {
+  padding: 15px;
+}
+
+.history-analysis-info h3 {
+  margin: 0 0 10px 0;
+  color: #1c2436;
+}
+
+.history-analysis-info p {
+  margin: 5px 0;
+  font-size: 14px;
+}
