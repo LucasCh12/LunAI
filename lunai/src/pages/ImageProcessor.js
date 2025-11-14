@@ -12,6 +12,7 @@ export default function ImageProcessor({ user }) {
   const fileInputRef = useRef(null);
   const [patientName, setPatientName] = useState('');
   const [patientAge, setPatientAge] = useState('');
+  const [patientGender, setPatientGender] = useState('');
 
 
   const handleImageUpload = (event) => {
@@ -55,6 +56,20 @@ export default function ImageProcessor({ user }) {
 
   const handleAnalyze = async () => {
     if (!selectedImage) return;
+    if(user?.role === 'professional'){
+      if(!patientName.trim()){
+        setError('Por favor, ingresa el nombre del paciente.');
+        return;
+      }
+      if(!patientAge || isNaN(patientAge) || patientAge <= 0){
+        setError('Por favor, ingresa una edad válida para el paciente.');
+        return;
+      }
+      if(!patientGender){
+        setError('Por favor, selecciona el género del paciente.');
+        return;
+      }
+    }
     setLoading(true);
     setError(null);
     setResult(null);
@@ -64,9 +79,10 @@ export default function ImageProcessor({ user }) {
       const formData = new FormData();
       formData.append('image', selectedImage);
       formData.append('user_id', user.id);
-      if (user.role === 'profesional') {
+      if (user.role === 'professional') {
         formData.append('patient_name', patientName);
         formData.append('patient_age', patientAge);
+        formData.append('patient_gender', patientGender);
       }
 
         const resp = await fetch('http://localhost:5000/images/upload_image', {
@@ -133,25 +149,38 @@ export default function ImageProcessor({ user }) {
 
       <div className="right-column">
         <h2>Analizar Lunar</h2>
-        <ul className= "text-of-image-processor">
+        <ul className="text-of-image-processor">
           <li>Diagnóstico inteligente con IA</li>
           <li>Seguimiento de cambios temporales</li>
         </ul>
-        
-        {user?.role === "profesional" && (
-          <div className="patient-section">
+
+        {user?.role === "professional" && (
+          <div className="patient-form-section">
+            <h3>Información del Paciente</h3>
             <input
               type="text"
               placeholder="Nombre del paciente"
               value={patientName}
               onChange={(e) => setPatientName(e.target.value)}
+              className="patient-input"
             />
             <input
               type="number"
               placeholder="Edad"
               value={patientAge}
               onChange={(e) => setPatientAge(e.target.value)}
+              className="patient-input"
             />
+            <select
+              value={patientGender}
+              onChange={(e) => setPatientGender(e.target.value)}
+              className="patient-input"
+            >
+              <option value="">Selecciona género</option>
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+              <option value="otro">Otro</option>
+            </select>
           </div>
         )}
 
@@ -161,7 +190,7 @@ export default function ImageProcessor({ user }) {
         
         <button 
           className="button-up"
-          disabled={!selectedImage || loading}
+          disabled={!selectedImage || loading || (user?.role === 'professional' && (!patientName || !patientAge || !patientGender))}
           onClick={handleAnalyze}
         >
           {loading ? 'Analizando...' : (selectedImage ? 'Analizar imagen' : 'Selecciona una imagen')}
