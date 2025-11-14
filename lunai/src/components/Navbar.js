@@ -23,7 +23,7 @@ function Navbar({ user, onLoginClick, onLogout }) {
         {user ? (
           <>
             <span className="username">👋 Hola, {user.name}</span>
-            <button className="button" onClick={() => window.location.href = '/not_yet'}>Mis lunares</button>
+            <button className="button" onClick={() => navigate('/history')}>Mis lunares</button>
             <button className="button" onClick={() => window.location.href = '/not_yet'}>Ayuda</button>
             <button className="button" onClick={onLogout}>Cerrar sesión</button>
           </>

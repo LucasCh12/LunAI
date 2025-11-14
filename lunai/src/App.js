@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import MainMenu from './pages/MainMenu';
 import ImageProcessor from './pages/ImageProcessor';
 import LoginModal from './components/LoginModal';
+import Historial from './pages/Historial';
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -42,6 +43,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainMenu user={user} />} />
           <Route path="/image-processor" element={<ImageProcessor user={user}/>} />
+          <Route path="/history" element={<Historial user={user} />} />
         </Routes>
 
         {showLogin && (

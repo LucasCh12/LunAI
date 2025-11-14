@@ -1,6 +1,6 @@
 # backend/images/routes.py
 import os
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify, current_app, send_from_directory
 from flask_cors import cross_origin
 from werkzeug.utils import secure_filename
 from database import db, User, Patient, Image
@@ -127,7 +127,7 @@ def get_images():
         # admin-ish: return all (limited)
         imgs = Image.query.order_by(Image.uploaded_at.desc()).limit(200).all()
 
-    return jsonify({"images": [i.to_dict() for i in imgs]}), 200
+    return jsonify([{**i.to_dict(),"patient_name": i.patient.name if i.patient else None,"patient_age": i.patient.age if i.patient else None} for i in imgs]), 200
 
 
 @images_bp.route("/get_patients", methods=["GET"])
@@ -143,3 +143,7 @@ def get_patients():
 
     patients = Patient.query.filter_by(doctor_id=doctor_id).all()
     return jsonify({"patients": [p.to_dict() for p in patients]}), 200
+
+@images_bp.route("/uploads/<path:filename>")
+def uploaded_file(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
