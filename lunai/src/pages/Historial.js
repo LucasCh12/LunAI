@@ -6,14 +6,22 @@ export default function Historial({ user }) {
   const [selected, setSelected] = useState(null); // Para el modal
 
   useEffect(() => {
+    if (!user) return;
     fetch(`http://localhost:5000/images/get_images?user_id=${user.id}`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setImages(data);
       })
       .catch(err => console.error(err));
-  }, [user.id]);
-
+  }, [user]);
+  if (!user) {
+    return (
+      <div className="historial-container">
+        <h2>Historial de Análisis</h2>
+        <p className="sin-registros">Por favor, inicia sesión para ver tu historial de imágenes analizadas.</p>
+      </div>
+    );
+  }
   return (
     <div className="historial-container">
       <h2>Historial de Análisis</h2>

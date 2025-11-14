@@ -10,6 +10,7 @@ h2 {
 }
 
 .sin-registros {
+  color:#ffffffbb;
   text-align: center;
   font-size: 18px;
   opacity: 0.7;
@@ -64,9 +65,14 @@ h2 {
   animation: fadeIn .2s ease;
 }
 
+.text-for-historial {
+  color:#ffffffbb;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
 .modal-for-historial {
   background: white;
-  padding: 20px;
+  padding: 25px;
   width: 420px;
   border-radius: 18px;
   position: relative;
@@ -75,8 +81,8 @@ h2 {
 
 .cerrar {
   position: absolute;
-  right: 12px;
-  top: 12px;
+  right: 1px;
+  top: 1px;
   border: none;
   background: transparent;
   font-size: 18px;

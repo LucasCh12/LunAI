@@ -29,6 +29,7 @@ function App() {
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem('user');
+    // opcional window.location.href = '/'; // Redirigir al menú principal
   };
 
   return (

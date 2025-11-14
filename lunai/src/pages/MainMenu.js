@@ -16,7 +16,7 @@ export default function MainMenu() {
           <div className="main-texto">
             <h1>Bienvenido a LunAI</h1>
             <h2>Tu asistente inteligente para detectar lunares y cuidar tu piel</h2>
-            <p>Detecta y analiza lunares al instante, con resultados claros y fáciles de entender</p>
+            <p className="text-main">Detecta y analiza lunares al instante, con resultados claros y fáciles de entender</p>
           
             <div className="action-buttons">
               <button

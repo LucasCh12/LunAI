@@ -58,6 +58,10 @@ p{
     padding: 0 50px;
 }
 
+.text-main {
+    color: #e8ecef;
+}
+
 .button-up {
     margin-top: 3%;
     height: 55px;

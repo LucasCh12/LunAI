@@ -133,7 +133,7 @@ export default function ImageProcessor({ user }) {
 
       <div className="right-column">
         <h2>Analizar Lunar</h2>
-        <ul>
+        <ul className= "text-of-image-processor">
           <li>Diagnóstico inteligente con IA</li>
           <li>Seguimiento de cambios temporales</li>
         </ul>
@@ -157,7 +157,7 @@ export default function ImageProcessor({ user }) {
 
         <div className="separator"></div>
         
-        <h3>Tu asistente dermatológico con IA</h3>
+        <h3 className= "text-of-image-processor">Tu asistente dermatológico con IA</h3>
         
         <button 
           className="button-up"
@@ -167,7 +167,7 @@ export default function ImageProcessor({ user }) {
           {loading ? 'Analizando...' : (selectedImage ? 'Analizar imagen' : 'Selecciona una imagen')}
         </button>
         
-        <p>Sube una foto clara de tu lunar para análisis IA</p>
+        <p className= "text-of-image-processor">Sube una foto clara de tu lunar para análisis IA</p>
 
         {result && (
           <div className="result-box">

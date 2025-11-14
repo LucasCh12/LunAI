@@ -8,7 +8,15 @@
   align-items: flex-start;
   margin-top: 4%
 }
-
+ul {
+  list-style-type: disc;
+  padding-left: 20px; 
+  font-size: 16px;
+  background-color: #1c2436;
+}
+.text-of-image-processor {
+  color: #e8ecef;
+}
 .left-column {
   flex: 1;
   display: flex;
