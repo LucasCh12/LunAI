@@ -19,7 +19,7 @@ ul {
 }
 .patient-form-section {
   margin: 20px 0;
-  padding: 15px;
+  padding: 40px;
   background-color: #f9f9f9;
   border-radius: 8px;
   border: 1px solid #ddd;
@@ -102,6 +102,13 @@ ul {
   color: #4a90e2;
 }
 
+.result-box {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f1f1f1;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
 .image-preview {
   position: relative;
   width: 100%;
@@ -123,7 +130,6 @@ ul {
     cursor: pointer;
     width: 200px;
     transition: border-color 0.3s ease;
-    color: #ffffffcc;
     font-size: 17px;
     font-weight: 400;
 }

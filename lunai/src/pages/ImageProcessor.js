@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 
 import './ImageProcessor.css';
@@ -13,6 +13,7 @@ export default function ImageProcessor({ user }) {
   const [patientName, setPatientName] = useState('');
   const [patientAge, setPatientAge] = useState('');
   const [patientGender, setPatientGender] = useState('');
+  const resultRef = useRef(null);
 
 
   const handleImageUpload = (event) => {
@@ -114,6 +115,15 @@ export default function ImageProcessor({ user }) {
     }
   };
 
+  useEffect(() => {
+    if (result && resultRef.current) {
+      resultRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    }
+  }, [result]);
+
   return (
     <div className="image-upload-container">
       <div className="left-column">
@@ -199,7 +209,7 @@ export default function ImageProcessor({ user }) {
         <p className= "text-of-image-processor">Sube una foto clara de tu lunar para análisis IA</p>
 
         {result && (
-          <div className="result-box">
+          <div className="result-box" ref={resultRef}>
             <h4>Resultado</h4>
             <p>Clase: {result.result}</p>
             <p>Confianza: {(result.confidence ?? 0).toFixed(4)}</p>

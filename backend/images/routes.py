@@ -82,7 +82,6 @@ def upload_image():
                 patient = Patient(name=patient_name, age=patient_age, gender=patient_gender, doctor_id=user.id)
                 db.session.add(patient)
                 db.session.flush()
-                db.session.commit()
             patient_id = patient.id
 
     # Ejecutar predicción con IA (si hay modelo cargado)
@@ -127,7 +126,22 @@ def get_images():
         # admin-ish: return all (limited)
         imgs = Image.query.order_by(Image.uploaded_at.desc()).limit(200).all()
 
-    return jsonify([{**i.to_dict(),"patient_name": i.patient.name if i.patient else None,"patient_age": i.patient.age if i.patient else None} for i in imgs]), 200
+    result = []
+    for i in imgs:
+        img_dict = i.to_dict()
+        if i.patient:
+            img_dict["patient_name"] = i.patient.name
+            img_dict["patient_age"] = i.patient.age
+            img_dict["patient_gender"] = i.patient.gender
+            img_dict["patient_id"] = i.patient.id
+        else:
+            img_dict["patient_name"] = None
+            img_dict["patient_age"] = None
+            img_dict["patient_gender"] = None
+            img_dict["patient_id"] = None
+        result.append(img_dict)
+
+    return jsonify(result), 200
 
 
 @images_bp.route("/get_patients", methods=["GET"])
