@@ -126,8 +126,9 @@ h2 {
 
 .images-row-container {
   position: relative;
-  padding: 20px 0; /* espacio arriba y abajo */
+  padding: 30px 50px; /* espacio arriba y abajo */
   overflow: visible;
+  margin: 0 -50px; /* para compensar el padding y que las flechas queden al borde */
 }
 
 .images-row {
@@ -136,11 +137,12 @@ h2 {
   overflow-x: auto;
   scroll-behavior: smooth;
   padding: 10px 0;
-  scrollbar-width: thin;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .images-row::-webkit-scrollbar {
-  height: 8px;
+  display: none;
 }
 
 .images-row::-webkit-scrollbar-thumb {
@@ -151,7 +153,7 @@ h2 {
   width: 250px;
   height: 200px;
   border-radius: 16px;
-  overflow: visible; /* ¡CLAVE! */
+  overflow: visible;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   transition: all 0.3s ease;
@@ -164,9 +166,9 @@ h2 {
 }
 
 .patient-thumb:hover {
-  transform: translateY(-8px) scale(1.05);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.2);
-  z-index: 10; /* ¡SOBRE TODO! */
+  transform: translateY(-12px) scale(1.06);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.25);
+  z-index: 15;
 }
 
 .patient-thumb img {
@@ -220,4 +222,51 @@ h2 {
   0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
   70% { box-shadow: 0 0 0 10px rgba(255,255,255,0); }
   100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+}
+
+.prev-button,
+.next-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%)translateX(-20px);
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border: 2px solid #ddd;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 20;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  pointer-events: none;
+}
+
+.prev-button {
+  left: 8px;
+}
+
+.next-button {
+  right: 8px;
+}
+
+.prev-button:hover,
+.next-button:hover {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+  transform: translateY(-50%) translateX(0) scale(1.12);
+  box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+}
+
+.images-row-container:hover .prev-button,
+.images-row-container:hover .next-button {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+  pointer-events: all;
 }

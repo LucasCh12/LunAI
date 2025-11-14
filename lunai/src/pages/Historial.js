@@ -106,6 +106,7 @@ function PatientImageRow({ images, onImageClick }) {
   const IMAGES_PER_PAGE = 5;
   const total = images.length;
   const canNext = startIdx + IMAGES_PER_PAGE < total;
+  const canPrev = startIdx > 0;
   return (
     <div className="images-row-container">
       <div className="images-row">
@@ -124,6 +125,14 @@ function PatientImageRow({ images, onImageClick }) {
           </div>
         ))}
       </div>
+      {canPrev && (
+        <button 
+          className="prev-button"
+          onClick={() => setStartIdx(prev => Math.max(0, prev - 1))}
+        >&lt;
+        </button>
+      )
+      }
       {canNext && (
         <button 
           className="next-button"

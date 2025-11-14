@@ -78,7 +78,7 @@ def upload_image():
         patient_dni = request.form.get("patient_dni")
         patient_gender = request.form.get("patient_gender")
         if patient_name and patient_dni:
-            patient = Patient.query.filter_by(dni=patient_dni, doctor_id=user.id).first()
+            patient = Patient.query.filter_by(dni=patient_dni).first()
             if not patient:
                 patient = Patient(name=patient_name, age=patient_age, dni=patient_dni, gender=patient_gender, doctor_id=user.id)
                 db.session.add(patient)
