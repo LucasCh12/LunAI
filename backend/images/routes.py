@@ -84,6 +84,11 @@ def upload_image():
                 db.session.flush()
             patient_id = patient.id
 
+    if patient_id:
+        patient = Patient.query.get(patient_id)
+        if patient:
+            pass
+
     # Ejecutar predicción con IA (si hay modelo cargado)
     result, confidence = predict_with_model(current_app, dest_path)
 

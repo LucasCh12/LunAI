@@ -81,7 +81,7 @@ export default function Historial({ user }) {
       ) : (
         Object.entries(patients).map(([patientId, imgs]) => {
           const patient = imgs[0];
-          const patientName = patient.patient_name || "Paciente sin nombre";
+          const patientName = patient.patient_name || "Paciente Sin Nombre";
           const patientIdLabel = patientId === "sin-paciente" ? "" : ` - ID: ${patientId}`;
 
           return (
