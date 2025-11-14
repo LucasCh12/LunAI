@@ -13,6 +13,7 @@ export default function ImageProcessor({ user }) {
   const [patientName, setPatientName] = useState('');
   const [patientAge, setPatientAge] = useState('');
   const [patientGender, setPatientGender] = useState('');
+  const [patientDNI, setPatientDNI] = useState('');
   const resultRef = useRef(null);
 
 
@@ -66,6 +67,10 @@ export default function ImageProcessor({ user }) {
         setError('Por favor, ingresa una edad válida para el paciente.');
         return;
       }
+      if(!patientDNI.trim()){
+        setError('Por favor, ingresa el DNI del paciente.');
+        return;
+      }
       if(!patientGender){
         setError('Por favor, selecciona el género del paciente.');
         return;
@@ -83,6 +88,7 @@ export default function ImageProcessor({ user }) {
       if (user.role === 'professional') {
         formData.append('patient_name', patientName);
         formData.append('patient_age', patientAge);
+        formData.append('patient_dni', patientDNI);
         formData.append('patient_gender', patientGender);
       }
 
@@ -181,6 +187,13 @@ export default function ImageProcessor({ user }) {
               onChange={(e) => setPatientAge(e.target.value)}
               className="patient-input"
             />
+            <input
+              type="text"
+              placeholder="DNI: ej: 12345678X"
+              value={patientDNI}
+              onChange={(e) => setPatientDNI(e.target.value)}
+              className="patient-input"
+            />
             <select
               value={patientGender}
               onChange={(e) => setPatientGender(e.target.value)}
@@ -200,7 +213,7 @@ export default function ImageProcessor({ user }) {
         
         <button 
           className="button-up"
-          disabled={!selectedImage || loading || (user?.role === 'professional' && (!patientName || !patientAge || !patientGender))}
+          disabled={!selectedImage || loading || (user?.role === 'professional' && (!patientName || !patientAge || !patientGender || !patientDNI))}
           onClick={handleAnalyze}
         >
           {loading ? 'Analizando...' : (selectedImage ? 'Analizar imagen' : 'Selecciona una imagen')}

@@ -24,12 +24,13 @@ class Patient(db.Model):
     name = db.Column(db.String(80), nullable=False)
     age = db.Column(db.Integer)
     gender= db.Column(db.String(10))
+    dni = db.Column(db.String(20), unique=True, nullable=False)
     doctor_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     images = db.relationship('Image', backref='patient', lazy=True)
 
     def to_dict(self):
-        return {"id": self.id,"name": self.name,"age": self.age,"gender": self.gender,"doctor_id": self.doctor_id
+        return {"id": self.id,"name": self.name,"age": self.age,"gender": self.gender, "dni":self.dni,"doctor_id": self.doctor_id
         }
     
 class Image(db.Model):

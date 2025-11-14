@@ -82,7 +82,8 @@ export default function Historial({ user }) {
         Object.entries(patients).map(([patientId, imgs]) => {
           const patient = imgs[0];
           const patientName = patient.patient_name || "Paciente Sin Nombre";
-          const patientIdLabel = patientId === "sin-paciente" ? "" : ` - ID: ${patientId}`;
+          const dni = patient.patient_dni || "DNI Desconocido";
+          const patientIdLabel = patientId === "sin-paciente" ? "" : ` - DNI: ${dni}`;
 
           return (
             <div key={patientId} className="patient-section">

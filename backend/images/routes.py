@@ -72,16 +72,17 @@ def upload_image():
 
     # Crear paciente si aplica
     patient_id = request.form.get("patient_id", type=int)
-    if user.role == "profesional" and not patient_id:
+    if user.role == "professional" and not patient_id:
         patient_name = request.form.get("patient_name")
         patient_age = request.form.get("patient_age", type=int)
+        patient_dni = request.form.get("patient_dni")
         patient_gender = request.form.get("patient_gender")
-        if patient_name:
-            patient = Patient.query.filter_by(name=patient_name, doctor_id=user.id).first()
+        if patient_name and patient_dni:
+            patient = Patient.query.filter_by(dni=patient_dni, doctor_id=user.id).first()
             if not patient:
-                patient = Patient(name=patient_name, age=patient_age, gender=patient_gender, doctor_id=user.id)
+                patient = Patient(name=patient_name, age=patient_age, dni=patient_dni, gender=patient_gender, doctor_id=user.id)
                 db.session.add(patient)
-                db.session.flush()
+                db.session.commit()
             patient_id = patient.id
 
     if patient_id:
@@ -138,11 +139,13 @@ def get_images():
             img_dict["patient_name"] = i.patient.name
             img_dict["patient_age"] = i.patient.age
             img_dict["patient_gender"] = i.patient.gender
+            img_dict["patient_dni"] = i.patient.dni
             img_dict["patient_id"] = i.patient.id
         else:
             img_dict["patient_name"] = None
             img_dict["patient_age"] = None
             img_dict["patient_gender"] = None
+            img_dict["patient_dni"] = None
             img_dict["patient_id"] = None
         result.append(img_dict)
 
