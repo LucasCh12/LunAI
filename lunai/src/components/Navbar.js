@@ -8,6 +8,18 @@ function Navbar({ user, onLoginClick, onLogout }) {
     navigate('/'); // Esto te llevará a la ruta principal (MainMenu)
   };
 
+  const goToHelp = () => {
+    navigate('/'); // Primero navega al MainMenu
+
+    // Esperamos un poquito a que se renderice el componente
+    setTimeout(() => {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth' // Scroll suave
+      });
+    }, 100); // 100ms es suficiente para que cargue el componente
+  };
+
   return (
     <nav className="navbar">
       <div className="izquierda">
@@ -24,7 +36,8 @@ function Navbar({ user, onLoginClick, onLogout }) {
           <>
             <span className="username">👋 Hola, {user.name}</span>
             <button className="button" onClick={() => navigate('/history')}>Mis lunares</button>
-            <button className="button" onClick={() => window.location.href = '/not_yet'}>Ayuda</button>
+            <button className="button" onClick={() => navigate('/image-processor')}>Analiza</button>
+            <button className="button" onClick={goToHelp}>Ayuda</button>
             <button className="button" onClick={onLogout}>Cerrar sesión</button>
           </>
         ) : (
@@ -32,7 +45,7 @@ function Navbar({ user, onLoginClick, onLogout }) {
             <button className="button" onClick={onLoginClick}>
               Iniciar Sesión
             </button>
-            <button className="button" onClick={() => window.location.href = '/not_yet'}>
+            <button className="button" onClick={goToHelp}>
               Ayuda
             </button>
           </>
