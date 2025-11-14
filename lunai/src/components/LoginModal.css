@@ -65,6 +65,14 @@
   font-size: 14px;
 }
 
+.modal form select {
+  width: 77%;
+  margin-bottom: 15px;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
 .modal form .submit-btn {
   width: 70%;
   padding: 12px;
@@ -104,7 +112,6 @@
 .derecha-login{
   display: flex;
   align-items: center;
-  gap: 10px;   
   background-color: #fff;
   width: 100%;
   position: relative;
@@ -132,7 +139,6 @@
   flex-direction: column;
   justify-content: center;
   padding: 20px;
-  gap: 15px;
 }
 
 .welcome-message {

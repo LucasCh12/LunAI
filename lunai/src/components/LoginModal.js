@@ -119,16 +119,6 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
                 onChange={handleChange}
                 required
               />
-              <select
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-                required
-              >
-                <option value="" disabled>Selecciona el uso que le daras</option>
-                <option value="personal">Personal</option>
-                <option value="professional">Profesional de la salud</option>
-              </select>
               </>
             )}
             <input
@@ -157,7 +147,18 @@ export default function LoginModal({ onClose, onLoginSuccess }) {
                 required
               />
             )}
-
+            {!isLogin && (
+              <select
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                required
+              >
+                <option value="" disabled>Selecciona el uso que le daras</option>
+                <option value="personal">Personal</option>
+                <option value="professional">Profesional de la salud</option>
+              </select>
+            )}
             <button type="submit" className="submit-btn">
               {isLogin ? "Ingresa" : "Registrarse"}
             </button>
