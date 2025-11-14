@@ -45,7 +45,7 @@ export default function Historial({ user }) {
       {/* MODAL */}
       {selected && (
         <div className="modal-overlay" onClick={() => setSelected(null)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-for-historial" onClick={(e) => e.stopPropagation()}>
             <button className="cerrar" onClick={() => setSelected(null)}>✖</button>
 
             <img 
