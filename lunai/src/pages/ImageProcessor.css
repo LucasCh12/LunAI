@@ -1,6 +1,6 @@
 .image-upload-container {
   display: flex;
-  gap: 40px;
+  gap: 60px;
   max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
@@ -58,7 +58,6 @@ ul {
 
 .right-column {
   flex: 1;
-  padding: 20px;
 }
 
 .upload-box {
@@ -128,7 +127,7 @@ ul {
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
-    width: 200px;
+    width: 100%;
     transition: border-color 0.3s ease;
     font-size: 17px;
     font-weight: 400;

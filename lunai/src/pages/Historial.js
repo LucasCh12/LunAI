@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./Historial.css";
-import { data } from "react-router-dom";
 
 export default function Historial({ user }) {
   const [images, setImages] = useState([]);

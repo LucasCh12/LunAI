@@ -216,7 +216,7 @@ export default function ImageProcessor({ user }) {
           disabled={!selectedImage || loading || (user?.role === 'professional' && (!patientName || !patientAge || !patientGender || !patientDNI))}
           onClick={handleAnalyze}
         >
-          {loading ? 'Analizando...' : (selectedImage ? 'Analizar imagen' : 'Selecciona una imagen')}
+          {loading ? 'Analizando...' : !selectedImage ? 'Selecciona una imagen': user?.role === 'professional' && (!patientName || !patientAge || !patientGender || !patientDNI) ? 'Completa la información del paciente' : 'Analizar Imagen'}
         </button>
         
         <p className= "text-of-image-processor">Sube una foto clara de tu lunar para análisis IA</p>
