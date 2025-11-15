@@ -105,7 +105,7 @@ function PatientImageRow({ images, onImageClick }) {
   const[startIdx, setStartIdx] = useState(0);
   const IMAGES_PER_PAGE = 5;
   const total = images.length;
-  const canNext = startIdx + IMAGES_PER_PAGE < total;
+  const canNext = startIdx + IMAGES_PER_PAGE <= total;
   const canPrev = startIdx > 0;
   return (
     <div className="images-row-container">
