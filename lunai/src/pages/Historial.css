@@ -128,7 +128,8 @@ h2 {
   position: relative;
   padding: 30px 50px; /* espacio arriba y abajo */
   overflow: visible;
-  margin: 0 -50px; /* para compensar el padding y que las flechas queden al borde */
+  margin: 0 -50px;
+  isolation: isolate;           /* ← CLAVE: evita cortes del hover */
 }
 
 .images-row {
@@ -245,6 +246,7 @@ h2 {
   z-index: 20;
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   pointer-events: none;
+  opacity: 0;
 }
 
 .prev-button {
