@@ -145,6 +145,7 @@ function PatientImageRow({ images, onImageClick }) {
   );
 }
 function renderModal(selected, onClose) {
+  if (!selected || selected.confidence=== undefined) {return null;}
   return (
     <div className="modal-overlay" onClick={ onClose}>
       <div className="modal-for-historial" onClick={e => e.stopPropagation()}>
@@ -155,13 +156,13 @@ function renderModal(selected, onClose) {
           className="modal-img"
         />
         <h3>Detalles del Análisis</h3>
-        <p className="text-for-historial"><strong>Resultado:</strong> {selected.result}</p>
-        <p className="text-for-historial"><strong>Confianza:</strong> {selected.confidence.toFixed(4)}</p>
-        <p className="text-for-historial"><strong>Fecha de Análisis:</strong> {new Date(selected.uploaded_at).toLocaleString()}</p>
+        <p className="text-for-result"><strong>Resultado:</strong> {selected.result}</p>
+        <p className="text-for-result"><strong>Confianza:</strong> {selected.confidence.toFixed(4)}</p>
+        <p className="text-for-result"><strong>Fecha de Análisis:</strong> {new Date(selected.uploaded_at).toLocaleString()}</p>
         {selected.patient_name && (
           <>
-          <p className="text-for-historial"><strong>Paciente:</strong> {selected.patient_name}</p>
-          <p className="text-for-historial"><strong>Edad:</strong> {selected.patient_age}</p> 
+          <p className="text-for-result"><strong>Paciente:</strong> {selected.patient_name}</p>
+          <p className="text-for-result"><strong>Edad:</strong> {selected.patient_age}</p> 
           </>
         )}
       </div>

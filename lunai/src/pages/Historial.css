@@ -65,6 +65,12 @@ h2 {
   animation: fadeIn .2s ease;
 }
 
+.text-for-result{
+  color:#333;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
 .text-for-historial {
   color:#ffffffbb;
   font-size: 16px;
@@ -79,10 +85,10 @@ h2 {
   animation: scaleIn .2s ease;
 }
 
-.cerrar {
+.close-modal {
   position: absolute;
-  right: 1px;
-  top: 1px;
+  right: 3px;
+  top: 3px;
   border: none;
   background: transparent;
   font-size: 18px;
@@ -119,7 +125,7 @@ h2 {
 .patient-name {
   margin: 0 0 12px 0;
   font-size: 1.3em;
-  color: #2c3e50;
+  color: #eee;
   font-weight: 600;
 }
 
