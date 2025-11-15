@@ -212,7 +212,7 @@ export default function ImageProcessor({ user }) {
         <h3 className= "text-of-image-processor">Tu asistente dermatológico con IA</h3>
         
         <button 
-          className="button-up"
+          className="button-up-for-analize"
           disabled={!selectedImage || loading || (user?.role === 'professional' && (!patientName || !patientAge || !patientGender || !patientDNI))}
           onClick={handleAnalyze}
         >
