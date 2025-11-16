@@ -1,0 +1,155 @@
+.image-upload-container {
+  display: flex;
+  gap: 60px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 80vh;
+  align-items: flex-start;
+  margin-top: 4%
+}
+ul {
+  list-style-type: disc;
+  padding-left: 20px; 
+  font-size: 16px;
+  background-color: #1c2436;
+}
+.text-of-image-processor {
+  color: #e8ecef;
+}
+.patient-form-section {
+  margin: 20px 0;
+  padding: 40px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.patient-form-section h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 1.1em;
+}
+
+.patient-input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+}
+
+.patient-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0,123,255,0.3);
+}
+
+.separator {
+  height: 1px;
+  background: #ddd;
+  margin: 20px 0;
+}
+.left-column {
+  flex: 1;
+  display: flex;
+}
+
+.right-column {
+  flex: 1;
+}
+
+.upload-box {
+  border: 2px dashed #4a90e2;
+  border-radius: 12px;
+  padding: 0;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #1c2436; 
+  
+  width: 100%;
+  aspect-ratio: 1 / 1; 
+  max-width: 1000px; 
+  max-height: 1000px; 
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.upload-box:hover {
+  border-color: #63a4ff; 
+  background-color: #252f45; 
+}
+
+.upload-box.has-image {
+  border: 2px solid #63a4ff;
+  background-color: #000;
+}
+
+.upload-placeholder {
+  color: #e8ecef; 
+  padding: 40px 20px;
+}
+
+.upload-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: #4a90e2;
+}
+
+.result-box {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f1f1f1;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+.image-preview {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-up-for-analize {
+    margin-top: 3%;
+    height: 55px;
+    background-color: #00000038;
+    color: white;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: border-color 0.3s ease;
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  object-position: center;
+  display: block;
+}
+
+.change-image-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(28, 36, 54, 0.9); 
+  color: #4a90e2; 
+  padding: 15px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+}
