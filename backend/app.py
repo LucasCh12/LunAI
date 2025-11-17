@@ -46,7 +46,7 @@ with app.app_context():
 MODEL = None
 if TF_AVAILABLE:
     MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', "engine",
-                                "models", "modelo_benigno_maligno_v1.keras")
+                                "models", "modelo_benigno_maligno_ft_v10.keras")
     try:
         MODEL = tf.keras.models.load_model(MODEL_PATH)
         app.config["MODEL"] = MODEL
