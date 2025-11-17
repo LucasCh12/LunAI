@@ -1,11 +1,15 @@
+""" Archivo principal de la aplicación Flask que configura la aplicación """
+import os
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
+
 from database.models import db
 from auth.routes import auth_bp, bcrypt as auth_bcrypt
 from images.routes import images_bp
-from flask_bcrypt import Bcrypt
-import os
+
+
 
 #  Intentar importar TensorFlow, pero no hacerlo obligatorio
 try:
@@ -31,43 +35,41 @@ bcrypt.init_app(app)
 # Si auth_bcrypt es una instancia diferente, inicialízala también
 try:
     auth_bcrypt.init_app(app)
-except Exception:
+except (AttributeError, RuntimeError):
     # Si ya está inicializada, simplemente ignora
     pass
 
 with app.app_context():
     db.create_all()
-    
-
 
 # Cargar modelo si está disponible
+MODEL = None
 if TF_AVAILABLE:
-    MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', "engine", "models", "modelo_benigno_maligno_v1.keras")
+    MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', "engine",
+                                "models", "modelo_benigno_maligno_v1.keras")
     try:
-        model = tf.keras.models.load_model(MODEL_PATH)
-        app.config["MODEL"] = model
+        MODEL = tf.keras.models.load_model(MODEL_PATH)
+        app.config["MODEL"] = MODEL
         print("✅ Modelo cargado correctamente.")
-    except Exception as e:
+    except (OSError, ValueError) as e:
         print(f"⚠️ Error al cargar el modelo: {e}")
         app.config["MODEL"] = None
-        model = None
+        MODEL = None
 else:
-    model = None
     app.config["MODEL"] = None
 
 # Registrar blueprints
 app.register_blueprint(auth_bp, url_prefix="/auth")
 app.register_blueprint(images_bp, url_prefix="/images")
 
-# Ruta home
 @app.route("/")
 def home():
+    """Ruta de estado del backend."""
     return jsonify({"message": "Backend funcionando correctamente"})
 
-# Ruta de predicción
 @app.route("/predict", methods=["POST"])
 def predict():
-
+    """Recibe una imagen, realiza predicción con el modelo y guarda el resultado en BD."""
     model= app.config.get("MODEL")
 
     if not TF_AVAILABLE or model is None:
@@ -78,7 +80,7 @@ def predict():
 
     image_file = request.files["image"]
     user_id = request.form.get("user_id")
-    
+
     # Guardar imagen temporalmente
     image_path = os.path.join("uploads", image_file.filename)
     os.makedirs("uploads", exist_ok=True)
@@ -111,13 +113,16 @@ def predict():
             "confianza": float(prediction)
         })
 
-    except Exception as e:
-        return jsonify({"error": f"Error al procesar la imagen: {e}"}), 500
+    except (OSError, ValueError) as img_error:
+        return jsonify({"error": f"Error al procesar la imagen: {img_error}"}), 500
 
-    # Limpieza de la imagen temporal
     finally:
-        if os.path.exists(image_path):
-            os.remove(image_path)
+         # Limpieza de la imagen temporal
+        try:
+            if os.path.exists(image_path):
+                os.remove(image_path)
+        except OSError:
+            pass
 
 if __name__ == "__main__":
     app.run(port = 5000, debug=True)

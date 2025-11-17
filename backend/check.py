@@ -1,4 +1,5 @@
-from database.models import db, User, Image
+""""Modulo que chequea el contenido de la base de datos"""
+from database.models import User, Image
 from app import app
 
 with app.app_context():

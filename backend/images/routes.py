@@ -1,9 +1,15 @@
-# backend/images/routes.py
+""""Rutas relacionadas con la gestión de imágenes: subida, listado, predicción con IA, etc. """
+
 import os
+import time
+import numpy as np
 from flask import Blueprint, request, jsonify, current_app, send_from_directory
 from flask_cors import cross_origin
 from werkzeug.utils import secure_filename
 from database import db, User, Patient, Image
+from PIL import Image as PILImage, UnidentifiedImageError
+
+
 
 images_bp = Blueprint("images", __name__)
 
@@ -13,17 +19,16 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 ALLOWED_EXT = {"png", "jpg", "jpeg", "bmp", "gif"}
 
 def allowed(filename):
+    """Comprueba si la extensión del archivo es permitida."""
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXT
 
 def predict_with_model(app, image_path):
-    """Intenta usar el modelo cargado en app.config['MODEL'] o app.model. Devuelve (result, confidence)."""
+    """Intenta usar el modelo cargado. Devuelve (result, confidence)."""
     model = app.config.get("MODEL") or getattr(app, "model", None)
     if not model:
         return ("Sin modelo", 0.0)
     try:
         # Aquí asumimos que el modelo recibe imagen 224x224 RGB y devuelve probabilidad [0..1]
-        from PIL import Image as PILImage
-        import numpy as np
         img = PILImage.open(image_path).convert("RGB").resize((224,224))
         arr = np.array(img) / 255.0
         arr = arr.reshape((1,)+arr.shape)
@@ -32,9 +37,10 @@ def predict_with_model(app, image_path):
         prob = float(pred[0][0]) if hasattr(pred[0], "__len__") else float(pred[0])
         label = "Maligno" if prob > 0.5 else "Benigno"
         return (label, prob)
-    except Exception as e:
+    except (ImportError, OSError, UnidentifiedImageError, ValueError,
+            TypeError, AttributeError) as exc:
         current_app.logger.exception("Error en predicción:")
-        return (f"Error predicción: {str(e)}", 0.0)
+        return (f"Error predicción: {str(exc)}", 0.0)
 
 @images_bp.route("/upload_image", methods=["POST"])
 @cross_origin()
@@ -65,7 +71,6 @@ def upload_image():
 
     # Guardar archivo físicamente
     filename = secure_filename(file.filename)
-    import time
     unique_name = f"{int(time.time())}_{user_id}_{filename}"
     dest_path = os.path.join(UPLOAD_FOLDER, unique_name)
     file.save(dest_path)
@@ -80,7 +85,11 @@ def upload_image():
         if patient_name and patient_dni:
             patient = Patient.query.filter_by(dni=patient_dni).first()
             if not patient:
-                patient = Patient(name=patient_name, age=patient_age, dni=patient_dni, gender=patient_gender, doctor_id=user.id)
+                patient = Patient(name=patient_name,
+                                  age=patient_age,
+                                  dni=patient_dni,
+                                  gender=patient_gender,
+                                  doctor_id=user.id)
                 db.session.add(patient)
                 db.session.commit()
             patient_id = patient.id
@@ -168,4 +177,5 @@ def get_patients():
 
 @images_bp.route("/uploads/<path:filename>")
 def uploaded_file(filename):
+    """Sirve archivos subidos."""
     return send_from_directory(UPLOAD_FOLDER, filename)

@@ -1,11 +1,11 @@
+""""Rutas de autenticación: registro y login de usuarios."""
+
 from flask import Blueprint, request, jsonify, session
 from flask_bcrypt import Bcrypt
 from database import db, User
 
 auth_bp = Blueprint("auth", __name__)
-# Create bcrypt instance; it will be initialized when app initializes extensions
 bcrypt = Bcrypt()
-
 
 @auth_bp.route("/register", methods=["POST"])
 def register():
@@ -39,5 +39,7 @@ def login():
         return jsonify({"error": "Credenciales incorrectas"}), 401
     return jsonify({
         "message": "Login exitoso",
-        "user": user.to_dict() if hasattr(user, 'to_dict') else {"id": user.id, "name": user.name, "email": user.email}
+        "user": user.to_dict() 
+        if hasattr(user, 'to_dict')
+        else {"id": user.id, "name": user.name, "email": user.email}
     }), 200

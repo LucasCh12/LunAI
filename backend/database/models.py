@@ -1,9 +1,11 @@
+""""Módulo que define los modelos de la base de datos."""
+
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-
-class User(db.Model):
+class User(db.Model): # pylint: disable=too-few-public-methods
+    """ Modelo de usuario para autenticación y gestión de roles. """
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
@@ -15,10 +17,11 @@ class User(db.Model):
     images = db.relationship('Image', backref='user', lazy=True)
 
     def to_dict(self):
+        """ Convierte el objeto User a un diccionario. """
         return {"id": self.id, "name": self.name, "email": self.email, "role": self.role}
 
-
-class Patient(db.Model):
+class Patient(db.Model): # pylint: disable=too-few-public-methods
+    """" Modelo de paciente asociado a un usuario (doctor). """
     __tablename__ = 'patients'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
@@ -30,10 +33,12 @@ class Patient(db.Model):
     images = db.relationship('Image', backref='patient', lazy=True)
 
     def to_dict(self):
-        return {"id": self.id,"name": self.name,"age": self.age,"gender": self.gender, "dni":self.dni,"doctor_id": self.doctor_id
-        }
-    
-class Image(db.Model):
+        """ Convierte el objeto Patient a un diccionario. """
+        return {"id": self.id,"name": self.name,"age": self.age,"gender": self.gender,
+                "dni":self.dni,"doctor_id": self.doctor_id}
+
+class Image(db.Model): # pylint: disable=too-few-public-methods
+    """ Modelo de imagen subida por un usuario, con resultados de predicción. """
     __tablename__ = 'imagenes'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(90), nullable=False)
@@ -45,6 +50,7 @@ class Image(db.Model):
     patient_id = db.Column(db.Integer, db.ForeignKey('patients.id'), nullable=True)
 
     def to_dict(self):
+        """ Convierte el objeto Image a un diccionario. """
         return {
             "id": self.id,
             "name": self.name,
