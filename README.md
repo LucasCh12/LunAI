@@ -28,6 +28,72 @@ Engine:
 
 Metodología SCRUM de trabajo
 
+# Instalación y Ejecución 🚀
+
+Puedes levantar el proyecto de dos formas: usando Docker (recomendado) o manualmente.
+
+### Opción A: Con Docker 🐳
+
+Asegúrate de estar en la carpeta raíz del proyecto.
+
+1. **Construir los contenedores:**
+   ```bash
+   sudo docker compose build
+2. **Levantar la aplicación:**
+   ```bash
+   sudo docker compose up
+3. **Acceder:**
+   Abre tu navegador en: http://localhost:3000/
+
+### Opción B: Manualmente 🛠️
+
+Necesitarás dos terminales abiertas: una para el Backend y otra para el Frontend.
+
+1. **Configurar el Backend (Terminal #1)**
+    ```bash
+    cd backend
+  
+    # Crear entorno virtual
+    python -m venv venv
+  
+    # Activar entorno virtual
+    # En Linux/Mac:
+    source venv/bin/activate
+    # En Windows:
+    venv\Scripts\activate
+  
+    # Instalar dependencias (solo la primera vez)
+    pip install -r requirements.txt
+    
+    # Iniciar servidor
+    python app.py
+    ```
+
+1. **Configurar el Frontend (Terminal #2)**
+    ```bash
+    cd lunai
+  
+    # Instalar dependencias (solo la primera vez)
+    npm install
+    
+    # Nota: Si aparece error con axios o router, ejecutar:
+    # npm install react-router-dom axios
+    
+    # Iniciar aplicación web
+    npm start
+    ```
+3. **Acceder:**
+   Abre tu navegador en: http://localhost:3000/
+
+  ### Comandos de Utilidad (Base de Datos) 🗃️
+
+Para verificar el estado de la base de datos manualmente:
+```bash
+cd backend
+# Recuerda activar el entorno virtual primero
+python check.py
+```
+   
 # Recursos 📎
 
 - [Prototipo diseño web](https://www.figma.com/design/ivyRJ5GPVwRTSddi4uub8a/Untitled?node-id=0-1&p=f&t=l7aAfI9ArB2nUCf0-0)  
