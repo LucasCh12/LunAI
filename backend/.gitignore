@@ -1,0 +1,13 @@
+# Entorno virtual
+venv/
+
+# Archivos de Python compilados
+__pycache__/
+*.pyc
+*.pyo
+
+# Archivos temporales de uploads
+uploads/
+
+# Modelos pesados 
+model/*.h5
